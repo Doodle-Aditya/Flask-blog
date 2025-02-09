@@ -13,8 +13,7 @@
         <nav class="navbar">
             <ul>
                 <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
                 {% if 'user_name' in session %}
                     <li><a href="{{ url_for('logout') }}">Logout</a></li>
                 {% else %}
