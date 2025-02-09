@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+
+</head>
+<body>
+    <header>
+        <h1>Blogger</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                {% if 'user_name' in session %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>     
+    </header>
+    <div class="contact-details">
+        <h2>Contact Details</h2>
+        <p><strong>Email:</strong> <a href="mailto:adityanishad98196@gmail.com">adityanishad98196@gmail.com</a></p>
+        <p><strong>GitHub:</strong> <a href="https://github.com/doodle-aditya" target="_blank">doodle-aditya</a></p>
+    </div>
+    <div class="faq">
+        <h2>Frequently Asked Questions</h2>
+        <details>
+            <summary>How can I contribute to this blog?</summary>
+            <p>You can contribute by submitting your articles via email or GitHub pull requests.</p>
+        </details>
+        <details>
+            <summary>Do you accept guest posts?</summary>
+            <p>Yes! Feel free to reach out with your ideas.</p>
+        </details>
+    </div>
+    <footer>
+        <p>&copy; 2025 My Blog. All rights reserved.</p>
+    </footer>
+</body>
+</html>

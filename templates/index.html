@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Blog</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
 
 </head>
 <body>
@@ -14,7 +14,7 @@
             <ul>
                 <li><a href="{{ url_for('about') }}">About</a></li>
                 <li><a href="#">Blog</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
                 {% if 'user_name' in session %}
                     <li><a href="{{ url_for('logout') }}">Logout</a></li>
                 {% else %}
