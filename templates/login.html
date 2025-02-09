@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Bloggger</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+
+<body>
+    <h1>Login Here!!</h1>
+    <form action="/login" ,method='POST'>
+        {{ form.hidden_tag() }}
+        <div class="item">
+            {{ form.user_name.label(for='user_name') }}
+            {{ form.user_name(id='user_name', class='form-control') }}
+
+            {% if form.user_name.errors %}
+            <ul>
+                {% for error in form.user_name.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="item">
+            {{ form.password.label(for='password') }}
+            {{ form.password(id='password', class='form-control') }}
+
+            {% if form.password.errors %}
+            <ul>
+                {% for error in form.password.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        {{ form.submit(class='submit-btn') }}
+    </form>
+    <footer>
+        <p>&copy; 2025 Blogger. All rights reserved.</p>
+    </footer>
+</body>
+</html>
