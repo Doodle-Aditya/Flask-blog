@@ -12,8 +12,7 @@
         <h1>Blogger</h1>
         <nav class="navbar">
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
                 <li><a href="#">Blog</a></li>
                 <li><a href="#">Contact</a></li>
                 {% if 'user_name' in session %}

@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
 </head>
 <body>
+    <header>
+        <h1>Blogger</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+            </ul>
+        </nav>     
+    </header>
     <h1>Register Here!!</h1>
     <form action="/register" method="POST">
         {{ form.hidden_tag() }}
@@ -65,5 +76,8 @@
 
         {{ form.submit(class='submit-btn') }}
     </form>
+    <footer>
+        <p>&copy; 2025 My Blog. All rights reserved.</p>
+    </footer>
 </body>
 </html>

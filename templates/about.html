@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+
+</head>
+<body>
+    <header>
+        <h1>Blogger</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contact</a></li>
+                {% if 'user_name' in session %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>     
+    </header>
+    <main>
+        <div class="about">
+            <h1>About website</h1>
+            <p>
+                Welcome to Blogger! This platform was built to share knowledge, insights, and experiences with a wider audience. Whether it’s about technology, finance, or personal experiences, this blog serves as a space for learning and discussion.
+            </p>
+            <h3>Tools & Technologies Used:</h3>
+            <ul>
+                <li>Frontend: HTML and CSS</li>
+                <li>Backend: Flask</li>
+                <li>Database: MySQL</li>
+                <li>Version Control: Git & GitHub</li>
+                <li>Environment Management: Conda</li>
+            </ul>
+            <h3>Resource and refrence</h3>
+            <ul>
+                <li>Youtbe</li>
+                <li>Chat GPT</li>
+            </ul>
+        </div>
+        <div class="about">
+            <h1>About me</h1>
+            <p>Hey, I'm Aditya Nishad, the developer behind this blog! I'm passionate about finance, technology, and web development. Through this platform, I aim to share valuable content with readers.
+            </p>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 My Blog. All rights reserved.</p>
+    </footer>
+
+    

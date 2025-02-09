@@ -9,13 +9,20 @@
 </head>
 
 <body>
+    <header>
+        <h1>Blogger</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+            </ul>
+        </nav>     
+    </header>
     <h1>Login Here!!</h1>
-    
-    <!-- Ensure the form method is POST -->
     <form action="{{ url_for('login') }}" method="POST">
-        <!-- CSRF Token to prevent attacks -->
-        {{ form.hidden_tag() }}  
-        
+        {{ form.hidden_tag() }}
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
         <div class="item">
