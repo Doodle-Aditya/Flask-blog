@@ -4,14 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Bloggger</title>
+    <title>Login - Blogger</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 
 <body>
     <h1>Login Here!!</h1>
-    <form action="/login" ,method='POST'>
-        {{ form.hidden_tag() }}
+    
+    <!-- Ensure the form method is POST -->
+    <form action="{{ url_for('login') }}" method="POST">
+        <!-- CSRF Token to prevent attacks -->
+        {{ form.hidden_tag() }}  
+        
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
         <div class="item">
             {{ form.user_name.label(for='user_name') }}
             {{ form.user_name(id='user_name', class='form-control') }}
@@ -24,6 +30,7 @@
             </ul>
             {% endif %}
         </div>
+
         <div class="item">
             {{ form.password.label(for='password') }}
             {{ form.password(id='password', class='form-control') }}
@@ -39,8 +46,10 @@
 
         {{ form.submit(class='submit-btn') }}
     </form>
+
     <footer>
-        <p>&copy; 2025 Blogger. All rights reserved.</p>
+        <p>&copy; 2025 My Blog. All rights reserved.</p>
     </footer>
 </body>
+
 </html>

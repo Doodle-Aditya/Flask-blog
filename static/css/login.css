@@ -1,13 +1,18 @@
 /* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100vh; /* Full viewport height */
     flex-direction: column;
-    margin: 0;
 }
 
 /* Heading */
@@ -19,16 +24,19 @@ h1 {
 /* Form Container */
 form {
     background: #fff;
-    padding: 20px;
+    padding: 25px;
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 350px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 /* Input Field Styles */
 .item {
-    margin-bottom: 15px;
+    width: 100%;
     text-align: left;
 }
 
@@ -82,13 +90,6 @@ ul {
 /* Footer */
 footer {
     margin-top: 20px;
-    font-size: 12px;
     color: #666;
-}
-
-/* Responsive Design */
-@media (max-width: 400px) {
-    form {
-        width: 90%;
-    }
+    font-size: 14px;
 }

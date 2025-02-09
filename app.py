@@ -1,13 +1,15 @@
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, session, flash, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Email, ValidationError
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired
 from flask_mysqldb import MySQL
+from flask_wtf.csrf import CSRFProtect
 
 app = Flask(__name__)
 
 # Secret Key
 app.config['SECRET_KEY'] = 'A2Z123'
+csrf = CSRFProtect(app)
 
 # MySQL Config
 app.config['MYSQL_HOST'] = 'localhost'
@@ -16,37 +18,18 @@ app.config['MYSQL_PASSWORD'] = '123456'
 app.config['MYSQL_DB'] = 'userbase'
 
 mysql = MySQL(app)
-class Loginform(FlaskForm):
-    user_name = StringField('Username',validators=[DataRequired()])
-    password = PasswordField('Password',validators=[DataRequired()])
-    submit = SubmitField('Login')
-    
+
 class RegisterForm(FlaskForm):
     user_name = StringField('User Name', validators=[DataRequired()])
     name = StringField('Name', validators=[DataRequired()])
-    email = EmailField('Email', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Register')
 
-    # Custom validation for username
-    def validate_user_name(self, field):
-        cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM user_1 WHERE user_name = %s", (field.data,))
-        existing_user = cursor.fetchone()
-        cursor.close()
-
-        if existing_user:
-            raise ValidationError("Username is already taken. Please choose another.")
-
-    # Custom validation for email
-    def validate_email(self, field):
-        cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM user_1 WHERE email = %s", (field.data,))
-        existing_email = cursor.fetchone()
-        cursor.close()
-
-        if existing_email:
-            raise ValidationError("Email is already registered. Please use another email.")
+class LoginForm(FlaskForm):
+    user_name = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login')
 
 @app.route('/')
 def home():
@@ -55,7 +38,7 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
-    
+
     if form.validate_on_submit():
         user_name = form.user_name.data
         name = form.name.data
@@ -70,32 +53,45 @@ def register():
         cursor.close()
 
         flash('Registration successful! Please log in.', 'success')
-        return redirect(url_for('login'))
+        return redirect(url_for('login'))  # Redirect to login page after registration
 
     return render_template('register.html', form=form)
 
-@app.route('/login',methods = ['GET','POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = Loginform()
+    form = LoginForm()
+
+
     if form.validate_on_submit():
-        username = form.user_name.data
+        user_name = form.user_name.data
         password = form.password.data
 
         cursor = mysql.connection.cursor()
-        cursor.execute('Select * from user_1 where user_name = %s',(username,))
+        cursor.execute('SELECT * FROM user_1 WHERE user_name = %s', (user_name,))
         user = cursor.fetchone()
         cursor.close()
+
 
         if user:
             db_password = user[3]
             if db_password == password:
-                session['user_name'] = username  
-                flash('Login successful!', 'success')  
-                return redirect(url_for('dashboard'))
+                session['user_name'] = user_name
+
+                flash('Login successful!', 'success')
+                return redirect(url_for('home'))
             else:
-                flash('Invalid Username or Password','Check your details')
-    return render_template('login.html',form=form)
+                flash('Invalid Username or Password', 'danger')
+        else:
+            flash('User not found', 'danger')
+
+    return render_template('login.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user_name', None)
+    flash('Logged out successfully!', 'success')
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)
-
