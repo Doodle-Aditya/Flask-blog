@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Blogger</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                {% if 'user_name' in session %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <form method="POST" class="search-container">
+            {{ search_form.hidden_tag() }}
+            {{ search_form.key_word(class='form-control', placeholder='Search blog...') }}
+            {{ search_form.submit(class='submit-btn') }}
+        </form>
+
+        <form method="POST" class="blog-form">
+            {{ blog_form.hidden_tag() }}
+            <div class="item">
+                {{ blog_form.blogname.label }} {{ blog_form.blogname(class='form-control') }}
+            </div>
+            <div class="item">
+                {{ blog_form.description.label }} {{ blog_form.description(class='form-control') }}
+            </div>
+            <div class="item">
+                {{ blog_form.fullblog.label }} {{ blog_form.fullblog(class='form-control') }}
+            </div>
+            {{ blog_form.submit(class='submit-btn') }}
+        </form>
+
+        <section class="blog-posts">
+            {% for blog in all_blogs %}
+            <div class="blog-post">
+                <h3>{{ blog[1] }}</h3>
+                <p>{{ blog[2] }}</p>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 My Blog. All rights reserved.</p>
+    </footer>
+</body>
+</html>
