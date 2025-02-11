@@ -4,6 +4,9 @@ from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 from flask_mysqldb import MySQL
 from flask_wtf.csrf import CSRFProtect
+import os
+from flask_sqlalchemy import SQLAlchemy
+
 
 app = Flask(__name__)
 
@@ -11,13 +14,11 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'A2Z123'
 csrf = CSRFProtect(app)
 
-# MySQL Config
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '123456'
-app.config['MYSQL_DB'] = 'userbase'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-mysql = MySQL(app)
+mysql = SQLAlchemy(app)
+
 
 # Forms
 class RegisterForm(FlaskForm):
